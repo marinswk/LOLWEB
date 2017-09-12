@@ -10,7 +10,7 @@ namespace LOLWEB.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "LOLWeb Home Page";
 
             return View();
         }
