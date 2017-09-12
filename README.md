@@ -1,0 +1,4 @@
+# LOLWEB
+A trial application using LOL web API
+
+STILL IN SUPER EARLY DEVELOPMENT
