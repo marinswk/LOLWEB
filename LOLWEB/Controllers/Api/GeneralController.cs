@@ -1,39 +1,31 @@
-﻿using System;
+﻿using LOLWEB.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
 
 namespace LOLWEB.Controllers
 {
     public class GeneralController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private string apiKeyParameter = "?api_key=" + WebConfigurationManager.AppSettings["ApiKey"];
+        private string euwAddress = WebConfigurationManager.AppSettings["ServerAddressEUW"];
 
-        // GET api/values/5
-        public string Get(int id)
+        [HttpGet]
+        public SummonerViewModel GetUserByUserName([FromUri]string userName)
         {
-            return "value";
-        }
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(euwAddress + "lol/summoner/v3/summoners/by-name/" + userName);
+            SummonerViewModel summoner = new SummonerViewModel();
+            HttpResponseMessage response = client.GetAsync(apiKeyParameter).Result;
+            if (response.IsSuccessStatusCode)
+                summoner = response.Content.ReadAsAsync<SummonerViewModel>().Result;
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            return summoner;
         }
     }
 }

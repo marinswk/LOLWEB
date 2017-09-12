@@ -1,6 +1,5 @@
-﻿function CallAPI() { }
-
-CallAPI.callSOmething = function () {
+﻿function CallAPI() {
     console.log("called");
-    HttpUtils.getDeferred("api/General", 5);
+    HttpUtils.getDeferred("api/General/GetUserByUserName?userName=" + $("#searchByUserName").val(), 0);
+
 }
