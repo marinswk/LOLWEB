@@ -1,11 +1,13 @@
 ﻿<div class="container">
-    <h1>Search by Summoner Name</h1>
+    <h3>Search by Summoner Name</h3>
     <form>
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="search" id="searchByUserName">
+        <div class="input-group">           
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit" onclick="CallAPI()"><i class="glyphicon glyphicon-search"></i></button>
+                <input type="text" class="form-control" placeholder="Search" name="search" id="searchByUserName">
+                <button class="btn btn-default" type="submit" onclick="CallAPI();"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         </div>
     </form>
+
+    <div id="log"></div>
 </div>

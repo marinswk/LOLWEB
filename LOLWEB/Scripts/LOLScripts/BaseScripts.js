@@ -1,5 +1,7 @@
 ﻿function CallAPI() {
-    console.log("called");
-    HttpUtils.getDeferred("api/General/GetUserByUserName?userName=" + $("#searchByUserName").val(), 0);
+    console.log(5 + 6);
 
+    var response = HttpUtils.getRequest("/api/General/GetUserByUserName", { "userName": $("#searchByUserName").val() }, function (response) {
+        $("#log").innerHTML += JSON.parse(response);
+    }, function (response) { });
 }

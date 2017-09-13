@@ -1,14 +1,30 @@
 ﻿function HttpUtils() { }
 
-HttpUtils.getRequest = function (url, data) {
+HttpUtils.getRequest = function (url, data, successHandler, errorHandler) {
     $.ajax({
         method: 'GET',
         url: url,
         data: data
     })
+        .done(function (response) {
+            if (typeof successHandler === 'function') {
+                successHandler(response);
+            }
+        })
+        //.fail(function (response) {
+        //    if (!_.isNull(errorHandler) && !_.isUndefined(errorHandler)) {
+        //        errorHandler(response);
+        //    } else {
+        //        MessageUtils.showError("Loading data failed.");
+        //    }
+        //});
+        //.always(function () {
+        //    var endTime = new Date().getTime();
+        //    log.warn('<<< GET [' + startTime + '] duration: ' + (endTime - startTime) + 'ms');
+        //});
 };
 
-HttpUtils.postRequest = function (url, data) {
+HttpUtils.postRequest = function (url, data, successHandler, errorHandler) {
     $.ajax({
         method: 'POST',
         url: url,
@@ -16,6 +32,18 @@ HttpUtils.postRequest = function (url, data) {
         processData: false,
         contentType: "application/json; charset=UTF-8",
     })
+        .done(function (response) {
+            if (typeof successHandler === 'function') {
+                successHandler(response);
+            }
+        })
+        .fail(function (response) {
+            if (!_.isNull(errorHandler) && !_.isUndefined(errorHandler)) {
+                errorHandler(response);
+            } else {
+                MessageUtils.showError("Posting data failed.");
+            }
+        })
 };
 
 /**
@@ -35,13 +63,13 @@ HttpUtils.getDeferred = function (url, data) {
 /**
  * wrap http post request into promise 
  */
-HttpUtils.postDeferred = function (url, data, hideSpinner) {
+HttpUtils.postDeferred = function (url, data) {
     var defer = $.Deferred();
     HttpUtils.postRequest(url, data,
         function (response) {
             defer.resolve(response);
         }, function (error) {
             defer.reject(error);
-        }, hideSpinner);
+        });
     return defer.promise();
 };
