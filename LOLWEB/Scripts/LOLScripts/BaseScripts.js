@@ -1,7 +1,13 @@
 ﻿function CallAPI() {
-    console.log(5 + 6);
+    console.log("something");
 
-    var response = HttpUtils.getRequest("/api/General/GetUserByUserName", { "userName": $("#searchByUserName").val() }, function (response) {
-        $("#log").innerHTML += JSON.parse(response);
-    }, function (response) { });
+    $.ajax({
+        method: 'GET',
+        url: '/api/General/GetUserByUserName',
+        data: { "userName": $("#searchByUserName").val() }
+    })
+        .done(function (response) {
+            console.log(response);
+            document.getElementById('log').innerHTML += JSON.stringify(response);
+        });
 }
